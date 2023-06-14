@@ -8,6 +8,18 @@ export class App extends Component {
     state = {
     contacts: [],
     filter:'',
+  }
+  componentDidMount() {
+    const parsedContacts = JSON.parse(localStorage.getItem('contacts'));
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+  }
+  componentDidUpdate(_, prevState) {
+    const { contacts } = this.state;
+      if (prevState.contacts !== contacts) {
+        localStorage.setItem('contacts', JSON.stringify(contacts))
+      }
     }
     addContact = ({name, number}) => {
       if (this.state.contacts.findIndex(contact => name === contact.name) === -1) {
@@ -25,7 +37,7 @@ export class App extends Component {
       }
     }
     onFilterChange = (e) => {
-      this.setState({filter:e.target.value})
+      this.setState({ filter: e.target.value })
     }
     filterContacts = () => {
       return this.state.contacts.filter(({name}) => name.toLowerCase().includes(this.state.filter.toLowerCase()));

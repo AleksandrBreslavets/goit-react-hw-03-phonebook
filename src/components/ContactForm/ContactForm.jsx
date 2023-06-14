@@ -1,4 +1,5 @@
 import { Component } from "react";
+import PropTypes from "prop-types";
 import {Form, Label, Input, Button } from "./ContactForm.styled";
 const INITIAL_STATE = {
   name: '',
@@ -8,6 +9,10 @@ export class ContactForm extends Component{
     state = {
         ...INITIAL_STATE,
     }
+
+    static propTypes = {
+         addContact:PropTypes.func.isRequired,
+     };
 
     onInputChange = (e) => {
     this.setState({ [e.target.name]: e.target.value})
